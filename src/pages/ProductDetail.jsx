@@ -3,11 +3,10 @@ import { useParams, Link } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
-function ProductDetail({ addToCart, token }) {
+function ProductDetail({ token }) {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     fetchProduct();
@@ -29,11 +28,6 @@ function ProductDetail({ addToCart, token }) {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleAddToCart = () => {
-    addToCart(product.id, quantity);
-    setQuantity(1);
   };
 
   if (loading) {
@@ -72,24 +66,6 @@ function ProductDetail({ addToCart, token }) {
               ? `✓ In Stock (${product.stock} available)`
               : "✗ Out of Stock"}
           </p>
-          <div className="quantity-selector">
-            <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>
-              -
-            </button>
-            <span>{quantity}</span>
-            <button
-              onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-            >
-              +
-            </button>
-          </div>
-          <button
-            className="btn btn-primary"
-            onClick={handleAddToCart}
-            disabled={product.stock === 0}
-          >
-            Add to Cart
-          </button>
         </div>
       </div>
     </div>

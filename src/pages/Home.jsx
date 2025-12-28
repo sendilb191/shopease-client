@@ -3,7 +3,7 @@ import ProductCard from "../components/ProductCard";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
-function Home({ addToCart, token }) {
+function Home({ token }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -70,11 +70,7 @@ function Home({ addToCart, token }) {
       ) : (
         <div className="products-grid">
           {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              addToCart={addToCart}
-            />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       )}

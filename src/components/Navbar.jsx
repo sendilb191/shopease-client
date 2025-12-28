@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Navbar({ cartCount, user, onLogout }) {
+function Navbar({ user, onLogout }) {
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-brand">
@@ -8,9 +8,8 @@ function Navbar({ cartCount, user, onLogout }) {
       </Link>
       <div className="navbar-links">
         <Link to="/">Products</Link>
-        <Link to="/cart" className="cart-icon">
-          🛍️ Cart
-          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+        <Link to="/add-product" className="btn-add-product">
+          ➕ Add Product
         </Link>
         {user ? (
           <div className="user-menu">
