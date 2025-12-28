@@ -7,18 +7,16 @@ function Home({ token }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
 
   useEffect(() => {
     fetchProducts();
-  }, [search, category, token]);
+  }, [search, token]);
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
       if (search) params.append("search", search);
-      if (category) params.append("category", category);
 
       const res = await fetch(`${API_URL}/api/products?${params}`, {
         headers: {
@@ -35,8 +33,6 @@ function Home({ token }) {
     }
   };
 
-  const categories = ["All", "Electronics", "Sports", "Accessories", "Home"];
-
   return (
     <div className="container">
       <div className="products-header">
@@ -48,18 +44,6 @@ function Home({ token }) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <select
-            value={category}
-            onChange={(e) =>
-              setCategory(e.target.value === "All" ? "" : e.target.value)
-            }
-          >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
         </div>
       </div>
 

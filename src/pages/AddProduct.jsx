@@ -10,21 +10,8 @@ function AddProduct({ token }) {
   const [success, setSuccess] = useState("");
   const [formData, setFormData] = useState({
     name: "",
-    description: "",
     price: "",
-    image: "",
-    category: "",
-    stock: "",
   });
-
-  const categories = [
-    "Electronics",
-    "Sports",
-    "Accessories",
-    "Home",
-    "Clothing",
-    "Books",
-  ];
 
   const handleChange = (e) => {
     setFormData({
@@ -40,12 +27,7 @@ function AddProduct({ token }) {
     setSuccess("");
 
     // Validation
-    if (
-      !formData.name ||
-      !formData.description ||
-      !formData.price ||
-      !formData.category
-    ) {
+    if (!formData.name || !formData.price) {
       setError("Please fill in all required fields");
       return;
     }
@@ -66,13 +48,7 @@ function AddProduct({ token }) {
         },
         body: JSON.stringify({
           name: formData.name,
-          description: formData.description,
           price: parseFloat(formData.price),
-          image:
-            formData.image ||
-            "https://images.unsplash.com/photo-1560393464-5c69a73c5770?w=300",
-          category: formData.category,
-          stock: parseInt(formData.stock) || 0,
         }),
       });
 
@@ -85,11 +61,7 @@ function AddProduct({ token }) {
       setSuccess("Product added successfully!");
       setFormData({
         name: "",
-        description: "",
         price: "",
-        image: "",
-        category: "",
-        stock: "",
       });
 
       // Redirect to home after 2 seconds
@@ -129,89 +101,19 @@ function AddProduct({ token }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="description">Description *</label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Enter product description"
-              rows="3"
-              required
-            />
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="price">Price ($) *</label>
-              <input
-                type="number"
-                id="price"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                placeholder="0.00"
-                step="0.01"
-                min="0"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="stock">Stock Quantity</label>
-              <input
-                type="number"
-                id="stock"
-                name="stock"
-                value={formData.stock}
-                onChange={handleChange}
-                placeholder="0"
-                min="0"
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="category">Category *</label>
-            <select
-              id="category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select a category</option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="image">Image URL</label>
+            <label htmlFor="price">Price ($) *</label>
             <input
-              type="url"
-              id="image"
-              name="image"
-              value={formData.image}
+              type="number"
+              id="price"
+              name="price"
+              value={formData.price}
               onChange={handleChange}
-              placeholder="https://example.com/image.jpg"
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+              required
             />
-            <small>Leave empty to use a default image</small>
           </div>
-
-          {formData.image && (
-            <div className="image-preview">
-              <p>Image Preview:</p>
-              <img
-                src={formData.image}
-                alt="Preview"
-                onError={(e) => (e.target.style.display = "none")}
-              />
-            </div>
-          )}
 
           <div className="form-actions">
             <button

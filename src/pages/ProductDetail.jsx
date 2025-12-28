@@ -30,6 +30,16 @@ function ProductDetail({ token }) {
     }
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   if (loading) {
     return <div className="container loading">Loading product...</div>;
   }
@@ -55,17 +65,11 @@ function ProductDetail({ token }) {
         ← Back to Products
       </Link>
       <div className="product-detail">
-        <img src={product.image} alt={product.name} />
         <div className="product-detail-info">
-          <span className="product-category">{product.category}</span>
+          <div className="product-id">Product #{product.id}</div>
           <h1>{product.name}</h1>
           <p className="price">${product.price.toFixed(2)}</p>
-          <p className="description">{product.description}</p>
-          <p className="stock">
-            {product.stock > 0
-              ? `✓ In Stock (${product.stock} available)`
-              : "✗ Out of Stock"}
-          </p>
+          <p className="added-time">Added: {formatDate(product.addedTime)}</p>
         </div>
       </div>
     </div>
